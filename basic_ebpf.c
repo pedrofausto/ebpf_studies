@@ -32,7 +32,7 @@ static int drop_pkt(struct __sk_buff *skb)
     if (data + eth_off + iphdr_off + sizeof(struct tcphdr) > data_end)
         return XDP_PASS;
                 //return XDP_DROP;
-    if (ip->protocol == IPPROTO_TCP && (tcph->dest == htons(80) || tcph->source == htons(4040)) ) {
+    if (ip->protocol == IPPROTO_TCP && (tcph->dest == htons(80) || tcph->source == htons(80)) ) {
         return XDP_PASS;
         }
     else {
@@ -46,3 +46,12 @@ int xdp_drop(struct __sk_buff *skb)
 }
 
 char __license[] __section("license") = "GPL";
+
+/* Loading 
+sudo tc qdisc add dev ens33 clsact
+sudo tc filter add dev ens33 egress bpf direct-action obj basic_ebpf.o sec prog
+tc filter show dev ens33 egress
+
+*** Unloading
+sudo tc filter del dev ens33 egress
+*/
