@@ -8,6 +8,7 @@
 #include <linux/sched.h>
 #include <bpf/bpf_helpers.h>
 #include <linux/filter.h>
+#include "bpf_legacy.h"
 
 
 #ifndef __section
@@ -26,37 +27,22 @@
 #define PIN_GLOBAL_NS		2
 
 
-static inline int getProgram(void)
-{
-	const char name[] = "telnet";
-	char task_name[TASK_COMM_LEN] = { 0 };
+// static inline int getProgram(void)
+// {
+// 	const char name[] = "telnet";
+// 	char task_name[TASK_COMM_LEN] = { 0 };
 	
-    /*const struct task_struct *t; */
-	/*const char read_error[] = "read_error:   t->comm - %d\n";
-	const char read_suc[] = "read_success: t->comm - %d\n";
-	int ret = 0;
-
-    t = (struct task_struct *) bpf_get_current_task();
-	ret = bpf_probe_read_kernel(task_name, TASK_COMM_LEN, t->comm);*/
-	bpf_get_current_comm(&task_name, sizeof(task_name));
+// 	bpf_get_current_comm(&task_name, sizeof(task_name));
     
-	/*if (ret < 0) {
-		bpf_trace_printk(read_error, sizeof(read_error), ret);
-		return 0;
-	}
-
-	bpf_trace_printk(read_suc, sizeof(read_suc), ret);
-	bpf_trace_printk(name, sizeof(name));*/
-
-    /* Test if the process name is the one expected */
-	for (int i = 0; i < sizeof(name); ++i) {
-	    if (task_name[i] != name[i])
-	 		return 1;
-	 }
+//     /* Test if the process name is the one expected */
+// 	for (int i = 0; i < sizeof(name); ++i) {
+// 	    if (task_name[i] != name[i])
+// 	 		return 1;
+// 	 }
 	
-    /* In case of success, return 0 */
-	return 0;
-}
+//     /* In case of success, return 0 */
+// 	return 0;
+// }
 
 static inline int tcp_port_egress_block(struct __sk_buff *skb, __u16 blk_port)
 {
@@ -79,7 +65,6 @@ static inline int tcp_port_egress_block(struct __sk_buff *skb, __u16 blk_port)
 
 	dport = load_half(skb, nh_off + offsetof(struct tcphdr, dest));
 	if (dport != blk_port ) {
-		char log[] =  "destination port blocked: %d\n";
 		return TC_ACT_SHOT;
 	}
 	return TC_ACT_OK;
@@ -116,9 +101,9 @@ __section("cgroup_skb/ingress")
 int ingress(struct __sk_buff *skb) {
     int ret = 0;
     __u16 port = 4040;
-    ret = getProgram();
-    if (!ret)
-        return 1;
+    // ret = getProgram();
+    // if (!ret)
+    //     return 1;
     ret = tcp_port_ingress_block(skb, port);
     if (!ret)
         return 1;
@@ -131,9 +116,9 @@ int egress(struct __sk_buff *skb) {
     
     int ret = 0;
     __u16 port = 4040;
-    ret = getProgram();
-    if (!ret)
-        return 1;
+    // ret = getProgram();
+    // if (!ret)
+    //     return 1;
     ret = tcp_port_egress_block(skb, port);
     if (!ret)
         return 1;
