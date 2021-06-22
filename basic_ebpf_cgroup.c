@@ -15,7 +15,7 @@
 # define __section(NAME)                  \
    __attribute__((section(NAME), used))
 #endif
-#define ntohs(x) ((__be16)___constant_swab16((x)))
+#define htons(x) ((__be16)___constant_swab16((x)))
 
  #define TASK_COMM_LEN	16
 
@@ -23,21 +23,21 @@ static inline int check_process(void)
 {
 	const char name[] = "telnet";
 	char task_name[TASK_COMM_LEN] = { 0 };
-		
+
 	bpf_get_current_comm(&task_name, sizeof(task_name));
 
 	for (int i = 0; i < sizeof(name); ++i) {
 		if (task_name[i] != name[i])
 			return 0;
 	}
-	
+
 	return 1;
 }
 
 static inline int check_port_match(struct bpf_sock_addr *ctx)
-{ 
-             
-    if (ctx->user_port == ntohs(80) ) {
+{
+
+    if (ctx->user_port == htons(80)) {
         return 1;
     }
     else {
@@ -52,7 +52,7 @@ int drop_packet(struct bpf_sock_addr *ctx)
          return check_port_match(ctx);
     }
     else
-        return 0;        
+        return 0;
 }
 
 char __license[] __section("license") = "GPL";
