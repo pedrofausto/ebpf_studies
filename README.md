@@ -56,3 +56,9 @@ This will load the binary and attach it to a [cgroup](https://www.redhat.com/sys
 To unload the binary just:
   
   `make unload`
+
+The current code is "hard-coded". It means that, for now, it's only allowing egress communicaton to TCP/80 from TELNET. Ergo:
+  `telnet DESTINATION 80`
+
+If the destination it's a name, it must be resolved first and will be blocked (Default DNS uses UDP/53). To avoid that, [change](https://github.com/pedrofausto/ebpf_studies/blob/41a077b0e0b838c6360a3d6ea9f3596f3af97400/basic_ebpf_cgroup.c#L69) the code to allow UDP packages.
+
