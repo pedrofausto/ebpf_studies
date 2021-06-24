@@ -35,9 +35,7 @@ Or it's equivalent to other Linux Distros
 
         $ sudo apt install -y clang llvm golang make
 
- - Build the binary tools in `linux_tools` directory:
-
-        $ make
+ 
 
 ## Compiling
 You may use the Makefile to compile the source code.
