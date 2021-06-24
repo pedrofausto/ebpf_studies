@@ -9,7 +9,6 @@ Content
       * [Requiriments](#Requiriments)
       * [Compiling](#Compiling)
    * [Testing](#Testing)
-   * [Tecnologias](#tecnologias)
 <!--te-->
 
 ## About
