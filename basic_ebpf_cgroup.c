@@ -66,7 +66,7 @@ static inline int check_port_match(struct bpf_sock_addr *ctx)
     bpf_trace_printk(port_number, sizeof(port_number),htons(ctx->user_port));
     bpf_trace_printk(proto_number, sizeof(proto_number),ctx->protocol);
 
-    if (ctx->user_port == htons(80) && ctx->protocol == IPPROTO_TCP) {
+    if (ctx->user_port == htons(4040) && ctx->protocol == IPPROTO_TCP) {
         return 1;
     }
     else {
