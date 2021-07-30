@@ -12,12 +12,12 @@ Content
 <!--te-->
 
 ## About
-This example shows how to use [eBPF](https://docs.cilium.io/en/v1.9/bpf/) to block a TCP request based on the process name and TCP port.
+This example shows how to use [eBPF](https://docs.cilium.io/en/v1.9/bpf/) to variety of uses like: block a TCP request based on the process name and TCP port; audit process, files and other stuff; demosntrate the use of BPF maps and so forth.
 
 ## How to
-To use the code, just copy it to the kernel source tree under linux/samples/bpf/.
+To use the code, just copy it to the kernel source tree under linux/samples/bpf/. It will be faster and easier.
 
-## Requiriments
+## Requirements
 You should have an up-to-date local copy of the Linux Kernel tree:
 `git clone https://github.com/torvalds/linux.git`
 
@@ -37,10 +37,15 @@ Or it's equivalent to other Linux Distros
  
 
 ## Compiling
+*Using the code from the cgroups directory as example for the resto of this MAKEFILE*
 You may use the Makefile to compile the source code.
+
 Also, it's possible to compile the code usgin clang, as follow:
 
 `clang -O2 -Wall -target bpf -c basic_ebpf_cgroup.c -o basic_ebpf_cgroup.o`
+
+In the above example, the ELF object file will be named "basic_ebpf_cgroup.o", created from the eBPF program "basic_ebpf_cgroup.c".
+The "target" flag states that clang must create an object with eBPF bytecodes in mind.
   
 ## Testing
 
@@ -54,8 +59,9 @@ To unload the binary just:
   
   `make unload`
 
-The current code is "hard-coded". It means that, for now, it's only allowing egress communicaton to TCP/80 from TELNET. Ergo:
+Some implementations are "hard-coded". It means that, for example, some eBPF programs will have a "fixed" logic. For exemple: the above example from "Compiling" section, is only allowing egress communicaton to TCP/80 from TELNET. Ergo:
   `telnet DESTINATION 80`
 
 If the destination it's a name, it must be resolved first and will be blocked (Default DNS uses UDP/53). To avoid that, [change](https://github.com/pedrofausto/ebpf_studies/blob/41a077b0e0b838c6360a3d6ea9f3596f3af97400/basic_ebpf_cgroup.c#L69) the code to allow UDP packages.
 
+Futher examples will be updated and expanded as soon as possible.
