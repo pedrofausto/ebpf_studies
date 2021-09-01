@@ -47,14 +47,14 @@ Or it's equivalent to other Linux Distros
 You may use the Makefile to compile the source code as simples as:
 `make`
 
-Also, it's possible to compile the code usgin clang, as follow:
+Also, it's possible to compile the code using clang, as follow:
 
 `clang -O2 -Wall -target bpf -c basic_ebpf_cgroup.c -o basic_ebpf_cgroup.o`
 
 In the above example, the ELF object file will be named "basic_ebpf_cgroup.o", created from the eBPF program "basic_ebpf_cgroup.c".
 The "target" flag states that clang must create an object with eBPF bytecodes in mind.
 
-For the code that use libbpf-bootstrap, just compile passing as argument the code do you want:
+For the code that use libbpf-bootstrap, just compile passing as argument the code do you want to compile:
 `make example`
 or
 `make minimal`
