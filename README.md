@@ -42,7 +42,8 @@ Or it's equivalent to other Linux Distros
         $ sudo apt install -y clang llvm golang make
 
 ## Compiling
-*Using the code from the cgroups directory as example for the rest of this MAKEFILE*
+### without libbpf-bootstrap 
+*The following example is based on the code within the cgroups folder*
 
 You may use the Makefile to compile the source code as simples as:
 `make`
@@ -54,13 +55,15 @@ Also, it's possible to compile the code using clang, as follow:
 In the above example, the ELF object file will be named "basic_ebpf_cgroup.o", created from the eBPF program "basic_ebpf_cgroup.c".
 The "target" flag states that clang must create an object with eBPF bytecodes in mind.
 
+### with libbpf-bootstrap 
+*The following example is based on the code within the ebpf_maps folder*
 For the code that use libbpf-bootstrap, just compile passing as argument the code do you want to compile:
 `make example`
 or
 `make minimal`
   
 ## Testing
-
+### without libbpf-bootstrap
 After compiling, load the BPF object using:
   
   `make load`
@@ -76,6 +79,7 @@ Some implementations are "hard-coded". It means that some eBPF programs will hav
 
 If the destination it's a name, it must be resolved first and will be blocked (Default DNS uses UDP/53). To avoid that, [change](https://github.com/pedrofausto/ebpf_studies/blob/41a077b0e0b838c6360a3d6ea9f3596f3af97400/basic_ebpf_cgroup.c#L69) the code to allow UDP packages.
 
-
+### with libbpf-bootstrap
+In this scenario, libbpf-bootstrap uses the userspace code to load the ebpf bytecode. The detailed process can be read [here](https://nakryiko.com/posts/libbpf-bootstrap/)
 
 Futher examples will be updated and expanded as soon as possible.
