@@ -4,10 +4,8 @@
 Content
 =================
 <!--ts-->
-   * [About](#About)
-   * [How to](#"how-to")
-      * [Requiriments](#Requiriments)
-      * [Compiling](#Compiling)
+   * [Requiriments](#Requiriments)
+   * [Compiling](#Compiling)
    * [Testing](#Testing)
 <!--te-->
 
@@ -59,6 +57,6 @@ This implementation's logic is "hard-coded". It means that will have a "fixed" l
 
   `telnet DESTINATION 80`
 
-If the destination it's a name, it must be resolved first and will be blocked (Default DNS uses UDP/53). To avoid that, [change](https://github.com/pedrofausto/ebpf_studies/blob/41a077b0e0b838c6360a3d6ea9f3596f3af97400/basic_ebpf_cgroup.c#L69) the code to allow UDP packages.
+If the destination it's a name, it must be resolved first and will be blocked (Default DNS uses UDP/53). To avoid that, [change](https://github.com/pedrofausto/ebpf_studies/blob/41a077b0e0b838c6360a3d6ea9f3596f3af97400/basic_ebpf_cgroup.c#L69) the code to also allow UDP packages.
 
 Futher examples will be updated and expanded as soon as possible.
